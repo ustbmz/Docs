@@ -1,0 +1,196 @@
+# Front 项目升级vue3
+
+## 改造原则
+
+* 弃用 filter 及 mixin
+* 全部改用 TypeScript  ,更严谨的类型判断，更容易的类型推导
+* 逻辑与接口分离
+
+## 使用 veevalidate 4.x
+
+### Installation
+
+```bash
+# install with yarn
+yarn add vee-validate@next
+
+# install with npm
+npm install vee-validate@next --save
+```
+
+
+
+## 使用@vee-validate/rules
+
+VeeValidate offers a wide range of common validators that you can use as global validators, they are packed in a separate package under the `@vee-validate/rules` namespace
+
+```text
+yarn add @vee-validate/rules
+
+# or with npm
+npm install @vee-validate/rules
+```
+
+> 创建全局 rules   vee-validate.ts
+
+You can then start importing and defining rules globally:
+
+```js
+import { defineRule } from 'vee-validate';
+import { required, email, min } from '@vee-validate/rules';
+
+defineRule('required', required);
+defineRule('email', email);
+defineRule('min', min);
+```
+
+
+
+## Using @vee-validate/i18n
+
+### Overview
+
+The `@vee-validate/i18n` contains a simple message generator function that you can use to generate localized messages from JSON objects:
+
+First, you need to install the `@vee-validate/i18n` package:
+
+```text
+yarn add @vee-validate/i18n
+
+# or with npm
+npm install @vee-validate/i18n
+```
+
+> 配置国际化i18n    vee-validate.ts
+
+```
+import { localize } from '@vee-validate/i18n'
+import zh from '@vee-validate/i18n/dist/locale/zh_CN.json'
+import {
+  confirmed,
+  email,
+  // eslint-disable-next-line camelcase
+  is_not,
+  length,
+  max,
+  min,
+  required
+} from '@vee-validate/rules'
+import { configure, defineRule } from 'vee-validate'
+
+defineRule('required', required)
+defineRule('email', email)
+defineRule('min', min)
+defineRule('min', length)
+defineRule('min', max)
+defineRule('min', is_not)
+defineRule('min', confirmed)
+
+const config = {
+  messages: {
+    ...zh.messages,
+    required: '请输入{field}'
+  },
+  names: {
+    name: '昵称',
+    username: '账号',
+    password: '密码',
+    code: '验证码'
+  }
+}
+
+configure({
+  // Generates an English message locale generator
+  generateMessage: localize('zh_CN', config)
+})
+```
+
+> eslint 规则 增加ts 不指定返回类型会引发warning的问题
+
+```
+"@typescript-eslint/explicit-module-boundary-types": "off"
+```
+
+
+
+##  Setting Errors Manually
+
+Quite often you will find yourself unable to replicate some validation rules on the client-side due to natural limitations. For example, `unique` email validation is complex to implement on the client-side, which is why the `<Form />` component allows you to set errors manually.
+
+You can set messages for fields by using either `setFieldError` which sets an error message for one field at a time, and the `setErrors` function which allows you to set error messages for multiple fields at once.
+
+Both functions are available on the `Form` component scoped slot props, and also on the `Form` component instance which enables you to use it with template `$refs`, and also for added convenience on the `submit` event handler since it would be the most common place for its usage.
+
+Here are a few snippets showcasing its usage in these various scenarios:
+
+**Using scoped slot props (recommended)**
+
+```html
+<Form v-slot="{ setFieldError, setErrors }">
+  <Field name="email"  />
+  <ErrorMessage name="email" />
+
+  <Field name="password"  />
+  <ErrorMessage name="password" />
+
+  <button type="button" @click="setFieldError('email', 'nope')">Set Single Error</button>
+  <button type="button" @click="setErrors({ email: 'nope', password: 'wrong' })">
+    Set Multiple Errors
+  </button>
+</Form>
+```
+
+**Using submit callback (recommended)**
+
+> 使用submit提交form表单会自动调用校验validate()方法
+
+```html
+<template>
+  <Form @submit="onSubmit">
+    <Field name="email" />
+    <ErrorMessage name="email" />
+
+    <Field name="password" />
+    <ErrorMessage name="password" />
+
+    <button>Submit</button>
+  </Form>
+</template>
+
+<script>
+export default {
+  // ...
+  methods: {
+    onSubmit(values, actions) {
+      // Submit the values...
+
+      // set single field error
+      actions.setFieldError('email', 'this email is already taken');
+
+      // set multiple errors
+      actions.setErrors({
+        email: 'this field is already taken',
+        password: 'someone already has this password',
+      });
+    },
+  },
+};
+</script>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
