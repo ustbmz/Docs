@@ -474,33 +474,6 @@ $ git checkout -d v1.0.0
 
 
 
-1.进入项目根目录
-$ cd d:/project/demo
-2.初始化仓库
-$ git init
-3.然后添加到远程仓库
- （1）在git里面创建一个仓库
-
-
-
- （2）获取该仓库的SSH地址
-
-
-
- （3）命令行中输入添加到远程仓库的命令
-
- git remote add origin git@gitee.com:kitecat/c-language.git
-4.再将代码添加到本地git
-$ git add .
-5.将代码提交到本地代码库
-$ git commit -m "提交命名，可任意"
-6.最后将本地git推到远程上
-$ git push origin master
-
-
-
-
-
 # 将本地已有项目添加到git仓库
 
 由于历史原因，我们往往会先创建好一个项目，然后再有git仓库地址，这时候就需要我们将本地的项目添加到git仓库
@@ -540,3 +513,23 @@ $ git push origin master
 6、最后将本地git推到远程上
 
 > $ git push origin master
+
+
+
+### Git仓库管理忽略 DS_Store 文件
+
+作为一名使用Mac的开发者，在日常开发过程中，经常会使用Git来对代码文件夹进行版本控制。而在默认情况下，Git会把 DS_Store 文件带入版本控制的范围内。所以，可以手动将其踏入 Git 的版本管理忽略列表。
+
+1. 将 . DS_Store 加入全局的 .gitignore 文件，执行命令：
+
+```text
+echo .DS_Store >> ~/.gitignore_global
+```
+
+2. 将这个全局的 .gitignore 文件加入Git的全局config文件中，执行命令：
+
+```text
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+哦了，. DS_Store 再也不会出现在你项目的Git代码仓库中了！
