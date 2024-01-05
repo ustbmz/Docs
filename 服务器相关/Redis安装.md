@@ -82,7 +82,7 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/usr/local/redis/bin/redis-server /usr/local/redis/bin/redis.conf
+ExecStart=/usr/bin/redis-server /etc/redis.conf
 PrivateTmp=true
 
 [Install]
