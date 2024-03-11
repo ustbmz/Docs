@@ -1,13 +1,6 @@
-## Git基础命令
+# Git基础
 
-### 常见的git平台
-
-* gitlab
-* github
-* gitea
-* gitee
-
-### git 基础命令
+## Git 基础命令
 
 ```shell
 查看本地镜像git状态
@@ -74,7 +67,8 @@ stash &&apply
 
 ```
 
-> #### 如何修改提交中包含需要忽略的文件
+#### 如何修改提交中包含需要忽略的文件
+
 ```
 删除当前所有缓存文件
 > git rm --cached -r .
@@ -85,7 +79,7 @@ stash &&apply
 
 ####  
 
->  创建一个新的git项目并初始化
+#### 创建一个新的git项目并初始化
 
 ```
 echo "# git" >> README.md
@@ -103,6 +97,8 @@ git remote add origin git@github.com:ustbmz/git.git
 git push -u origin master
 ```
 
+
+
 ## Git Flow
 
 * ####  上游分支向下游发展
@@ -116,6 +112,8 @@ git push -u origin master
 * ####  Master分支为主,主要玩master,production上合并
 
   > master -- Stable  -- new Branch  -- bug fix  --  Version
+
+
 
 ### Git常用命令
 
@@ -163,6 +161,8 @@ git push -u origin master
 > git reset --hard head
 
 ```
+
+
 
 ### Git合并多次提交
 
@@ -264,19 +264,19 @@ b. 一个github，用于自己进行一些开发活动；
 
 1. 生成一个公司用的SSH-Key
 
-```
+```bash
 $ ssh-keygen -t rsa -C 'cnmz@msn.com' -f ~/.ssh/gitee_id_rsa
 ```
 
 1. 生成一个github用的SSH-Key
 
-```
+```bash
 $ ssh-keygen -t rsa -C 'cnmz@msn.com' -f ~/.ssh/github_id_rsa
 ```
 
 1. 在  目录下新建一个config文件，添加如下内容（其中Host和HostName填写git服务器的域名，IdentityFile指定私钥的路径）
 
-```
+```sh
 # gitee
 Host gitee.com
 HostName gitee.com
@@ -291,25 +291,10 @@ IdentityFile ~/.ssh/github_id_rsa
 
 4.用ssh命令分别测试
 
-```
+```bash
 $ ssh -T git@gitee.com
 $ ssh -T git@github.com
 ```
-
-```
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrRpSN29UGKCXWvZPYzVUyMj+dwuYtV3lK42TQuCMn4HMZrTc8TXCEBcf9DcQnCDvt/JlLHfWCDO+J10OHH/gbU8ccRi1L67amkii8JqeWK7mOLtziNgWRWAF/vntlvtSx1pRu0/vzBpuxjvxTvuAwHPlf7jOAjy0bC9xqhbzNYr8vi6qWRaoI4yMDNFTore9NQBWr9XYM0Zwv/zq7my+QIKNmu3zeuqRgi+lPkrgQv/ESXIsCC+sg/BvCb0BWvnRhjrmgPPFd4XOW3vo2kt26Z5FOb2YVP0/q9NokGN9y8PT38NynOYilPJPtdoxRMR632TASztb8oWDz8aY01sy8OvAc8f9jeNvhqiEaGkMtA9hAUJJXaj+JseYiv8sC4hLxGGeSsMjuLsuUMMMKZZ80KUOOWl5+i+hrU94dlG8Ro0PlGpXy11diu/V+Vnvk2tr0+KOvbIueV1WQEfGaz34c2ceJhAcpTeyWwmJsnFMJBlcaSnnDeiFNFTtLrJGX/Tk= cnmz@msn.com
-
-```
-
-
-
-
-
-这里以gitee为例，成功的话会返回下图内容
-
-![输入图片说明](https://images.gitee.com/uploads/images/2018/0921/161137_b71ef6be_967230.png)
-
-
 
 ## Git pull的完整语法格式是：
 
@@ -335,7 +320,7 @@ $ git pull origin master
 
 ## Git拉取远程分支到本地
 
-### 步骤：
+#### 步骤：
 
 ```shell
 #查看远程分支
@@ -353,7 +338,7 @@ $ git branch --set-upstream-to origin/远程分支名 本地分支名
 $ git branch -D 本地分支名称
 ```
 
-### 一、查看远程分支
+#### 一、查看远程分支
 
 使用如下git命令查看所有远程分支：
 
@@ -361,7 +346,7 @@ $ git branch -D 本地分支名称
 git branch -r
 ```
 
-### 二、拉取远程分支并创建本地分支
+#### 二、拉取远程分支并创建本地分支
 
 #### 方法一
 
@@ -411,7 +396,7 @@ git merge 本地分支名称
 
 ## Git 标签上线版本管理
 
-### 创建标签
+#### 创建标签
 
 在 Git 中创建附注标签十分简单。 最简单的方式是当你在运行 `tag` 命令时指定 `-a` 选项：
 
@@ -433,7 +418,7 @@ $ git show v1.4
 tag v1.4
 ```
 
-### 删除标签
+#### 删除标签
 
 要删除掉你本地仓库上的标签，可以使用命令 `git tag -d <tagname>`。 例如，可以使用以下命令删除一个轻量标签：
 
@@ -460,7 +445,7 @@ To /git@github.com:schacon/simplegit.git
 $ git push origin --delete <tagname>
 ```
 
-### 根据标签创建新分支
+#### 根据标签创建新分支
 
 ```shell
 $ git branch newbranch v1.0.0
@@ -474,49 +459,55 @@ $ git checkout -d v1.0.0
 
 
 
-# 将本地已有项目添加到git仓库
+## 将本地已有项目添加到git仓库
 
 由于历史原因，我们往往会先创建好一个项目，然后再有git仓库地址，这时候就需要我们将本地的项目添加到git仓库
 
 1、先进入项目根目录
 
-> $ git init
-
-  
+```bash
+$ git init
+```
 
 2、添加远程git仓库地址
 
-> $ git remote add origin [git@gitee.com](mailto:git@gitee.com):yourusername/yourproject.git
-
-  
+```bash
+$ git remote add origin [git@gitee.com](mailto:git@gitee.com):yourusername/yourproject.git
+```
 
 3、先将远程git仓库拉到本地
 
-> $ git pull  
-> 这一步有可能会需要你设置一下  
-> git branch --set-upstream-to=origin/<branch> master
-
-  
+```bash
+$ git pull  
+这一步有可能会需要你设置一下  
+git branch --set-upstream-to=origin/<branch> master  
+```
 
 4、再将代码添加到本地git
 
-> $ git add .
-
-  
+```bash
+$ git add .  
+```
 
 5、将代码提交到本地代码库
 
-> $ git commit -m "xxxx"
-
-  
+```bash
+$ git commit -m "xxxx"
+```
 
 6、最后将本地git推到远程上
 
-> $ git push origin master
+```bash
+$ git push origin master
+```
 
 
 
-### Git仓库管理忽略 DS_Store 文件
+
+
+## Git仓库管理忽略 DS_Store 文件
+
+
 
 作为一名使用Mac的开发者，在日常开发过程中，经常会使用Git来对代码文件夹进行版本控制。而在默认情况下，Git会把 DS_Store 文件带入版本控制的范围内。所以，可以手动将其踏入 Git 的版本管理忽略列表。
 
@@ -533,3 +524,12 @@ git config --global core.excludesfile ~/.gitignore_global
 ```
 
 哦了，. DS_Store 再也不会出现在你项目的Git代码仓库中了！
+
+
+
+## git commit后，如何撤销commit
+
+```bash
+$ git reset --soft HEAD^
+```
+

@@ -174,6 +174,12 @@ allow mongod_t cgroup_t:file { getattr open read };
 
 ## 创建admin账号
 
+```
+db.createUser({user:"admin",pwd:"IamMZ01@(",roles: [{role:"userAdminAnyDatabase",db: "admin"}]})
+```
+
+
+
 ```shell
 [root@localhost ~]# mongo
 MongoDB shell version v4.4.6
@@ -383,7 +389,7 @@ show users 查看当前数据库用户权限
 
 ### **创建用户**
 
-db.createUser({user:"usertest",pwd:"passtest",roles:[ {role:"clusterAdmin", db:"admin" }, {role:"readAnyDatabase",db:"admin" }, {role:"readWrite",db:"testDB" } ]})
+db.createUser({user:"test",pwd:"test",roles:[ {role:"clusterAdmin", db:"admin" }, {role:"readAnyDatabase",db:"admin" }, {role:"readWrite",db:"testDB" } ]})
 
 ### **权限详解**
 
