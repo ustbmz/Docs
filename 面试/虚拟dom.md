@@ -8,7 +8,7 @@
 
    在vue中，每个组件都有一个`render`函数，每个`render`函数都会返回一个虚拟dom树，这也就意味着每个组件都对应一棵虚拟DOM树
 
-   <img src="./assets/20210225140726.png" alt="image-20210225140726003" style="zoom:30%;" align="left" />
+   <img src="https://s2.loli.net/2024/07/12/bgJUuc91qpTBrGi.png" alt="image-20210225140726003" style="zoom:30%;" align="left" />
 
 2. 为什么需要虚拟dom？
 
@@ -24,7 +24,7 @@
 
    这样一来，就保证了对真实dom达到最小的改动。
 
-   <img src="./assets/20210225144108.png" alt="image-20210225144108143" style="zoom:33%;" align="left" />
+   <img src="https://s2.loli.net/2024/07/12/PTQ3Ljzmg2FpcYE.png" alt="image-20210225144108143" style="zoom:33%;" align="left" />
 
 4. 模板和虚拟dom的关系
 

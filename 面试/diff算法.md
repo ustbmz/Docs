@@ -49,13 +49,13 @@
 
    `_update`函数首先会给组件的`_vnode`属性重新赋值，让它指向新树
 
-   <img src="./assets/20210301193804.png" alt="image-20210301193804498" style="zoom:50%;" />
+   <img src="https://s2.loli.net/2024/07/12/31vtjYId4TDEbQF.png" alt="image-20210301193804498" style="zoom:50%;" />
 
    然后会判断旧树是否存在：
 
    - 不存在：说明这是第一次加载组件，于是通过内部的`patch`函数，直接遍历新树，为每个节点生成真实DOM，挂载到每个节点的`elm`属性上
 
-     <img src="./assets/20210301194237.png" alt="image-20210301194237825" style="zoom:43%;" />
+     <img src="https://s2.loli.net/2024/07/12/m9Awj25EHhGnaCL.png" alt="image-20210301194237825" style="zoom:43%;" />
 
    - 存在：说明之前已经渲染过该组件，于是通过内部的`patch`函数，对新旧两棵树进行对比，以达到下面两个目标：
 
@@ -78,7 +78,7 @@
 
    1. **根节点比较**
 
-      <img src="./assets/20210301203350.png" alt="image-20210301203350246" style="zoom:50%;" />
+      <img src="https://s2.loli.net/2024/07/12/yoshrv5LeH91Gml.png" alt="image-20210301203350246" style="zoom:50%;" />
 
       `patch`函数首先对根节点进行比较
 
