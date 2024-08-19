@@ -2,11 +2,11 @@
 
 ## Promise的基本概念
 
-![image-20210618161125894](./assets/20210618161125.png)
+![image-20210618161125894](https://s2.loli.net/2024/08/05/QE6VwlqafTDs45H.png)
 
 ## 链式调用规则
 
-![image-20210621103501094](./assets/20210621103501.png)
+![image-20210621103501094](https://s2.loli.net/2024/08/05/jvSKpmNiUBaLIw2.png)
 
 ![image-20210621103501094](./assets/20210621103501.png)
 
