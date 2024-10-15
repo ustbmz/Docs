@@ -115,6 +115,102 @@ git push -u origin master
 
 
 
+# 删除提交以及提交记录
+
+在 Git 中，如果你想删除最近的三次提交，你可以使用以下步骤和命令。注意，这些命令会影响提交历史，因此在使用之前请确保你了解其作用，尤其是在公共分支上执行这些操作时，其他开发者可能已经基于这些提交做了工作。
+
+
+
+### 方法1：使用 `git reset`（适用于本地仓库，强制修改历史）
+
+1. 查看提交日志，找到你想保留的最后一个提交的哈希值：
+
+   ```bash
+   git log
+   ```
+
+   找到你想保留的最后一个提交（即第 4 个提交）的哈希值。
+
+2. 重置到保留的提交：
+
+   ```bash
+   git reset --hard <保留的提交哈希值>
+   ```
+
+   例如，如果你想删除最近的三次提交，并保留倒数第 4 个提交的哈希值是 `abc123`，你可以运行：
+
+   ```bash
+   git reset --hard abc123
+   ```
+
+   这将会删除最近的三次提交。
+
+3. 如果你已经将这些提交推送到了远程仓库，你还需要强制推送修改：
+
+   ```bash
+   git push origin <分支名> --force
+   ```
+
+### 方法2：使用 `git rebase -i`（交互式删除特定提交）
+
+1. 启动交互式 rebase：
+
+   ```bash
+   git rebase -i HEAD~4
+   ```
+
+   这个命令会打开一个交互式编辑器，其中会显示最近的 4 次提交（包括你要删除的 3 次提交和要保留的第 4 次提交）。
+
+2. 在打开的编辑器中，找到你想要删除的 3 个提交，将其前面的 `pick` 改为 `drop` 或者直接删除对应的行。
+
+3. 保存并退出编辑器。Git 会自动执行 rebase，删除那些提交。
+
+4. 如果你已经推送到远程仓库，也需要强制推送：
+
+   ```bash
+   git push origin <分支名> --force
+   ```
+
+### 方法3：使用 `git revert`（适用于删除已经推送的提交，不破坏提交历史）
+
+如果你想保留提交历史而不是删除提交记录，可以使用 `git revert`。
+
+1. 回滚最近的三次提交：
+
+   ```
+   bash
+   
+   
+   Copy code
+   git revert HEAD~3..HEAD
+   ```
+
+   这会创建三个新的提交，分别逆转之前的三次提交，而不会修改提交历史。
+
+2. 推送到远程仓库：
+
+   ```
+   bash
+   
+   
+   Copy code
+   git push origin <分支名>
+   ```
+
+------
+
+这几种方法根据实际情况不同有所区别，`git reset --hard` 会完全删除提交，`git rebase -i` 可以交互式修改历史，而 `git revert` 则会保留历史但撤销更改。
+
+
+
+## git commit后，如何撤销commit
+
+```bash
+$ git reset --soft HEAD^
+```
+
+
+
 ### Git常用命令
 
 ```
@@ -295,28 +391,6 @@ IdentityFile ~/.ssh/github_id_rsa
 $ ssh -T git@gitee.com
 $ ssh -T git@github.com
 ```
-
-## Git pull的完整语法格式是：
-
-```javascript
-$ git pull <远程库名> <远程分支名>:<本地分支名>
-```
-
-默认情况下，如果我们的本地分支名与远程分支名是一样的，且已经建立追踪，直接使用
-
-```javas
-$ git pull
-```
-
-如果本地分支名与远程分支名是不一样的，例如：
-
-```javascript
-$ git pull origin master
-```
-
-上面就是从将master分支代码拉取到我本地分支
-
-
 
 ## Git拉取远程分支到本地
 
@@ -526,10 +600,4 @@ git config --global core.excludesfile ~/.gitignore_global
 哦了，. DS_Store 再也不会出现在你项目的Git代码仓库中了！
 
 
-
-## git commit后，如何撤销commit
-
-```bash
-$ git reset --soft HEAD^
-```
 

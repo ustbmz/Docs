@@ -32,13 +32,13 @@ $ docker run -itd --name redis-test -p 6379:6379 redis
 
 - **-p 6379:6379**：映射容器服务的 6379 端口到宿主机的 6379 端口。外部可以直接通过宿主机ip:6379 访问到 Redis 的服务。
 
-[![img](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis5.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis5.png)
+[![img](https://s2.loli.net/2024/09/29/Whap9sVkZE5GL6v.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis5.png)
 
 ### 5、安装成功
 
 最后我们可以通过 **docker ps** 命令查看容器的运行信息：
 
-[![img](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis6.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis6.png)
+[![img](https://s2.loli.net/2024/09/29/62iPNAJDnkfx3bZ.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis6.png)
 
 接着我们通过 redis-cli 连接测试使用 redis 服务。
 
@@ -46,4 +46,4 @@ $ docker run -itd --name redis-test -p 6379:6379 redis
 $ docker exec -it redis-test /bin/bash
 ```
 
-[![img](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis7.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis7.png)
+[![img](https://s2.loli.net/2024/09/29/Xbkc1CDWlGQoEpZ.png)](https://www.runoob.com/wp-content/uploads/2016/06/docker-redis7.png)

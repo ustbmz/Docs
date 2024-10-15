@@ -33,5 +33,3 @@ _ > use testDB
 root / admin123
 ```
 ````
-
-````

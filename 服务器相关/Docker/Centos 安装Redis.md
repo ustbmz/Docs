@@ -50,15 +50,10 @@
 
 **[root@localhost bin]# vi redis.conf**
 
-![img](https://gitee.com/cnmz/images/raw/master/mdpic/202110121853135.png)
-
 后台启动
 
 **[root@localhost bin]# ./redis-server redis.conf**
 
-![img](https://gitee.com/cnmz/images/raw/master/mdpic/202110121853444.png)
-
- 
 
 六、设置开机启动
 
@@ -100,7 +95,6 @@ WantedBy=multi-user.target
 
 测试 redis
 
-![img](https://gitee.com/cnmz/images/raw/master/mdpic/202110121853499.png)
 
  
 
