@@ -62,7 +62,7 @@
      - 完成对所有真实dom的最小化处理
      - 让新树的节点对应合适的真实dom
 
-     <img src="./assets/20210301195003.png" alt="image-20210301195003696" style="zoom:50%;" />
+     <img src="https://s2.loli.net/2024/11/05/yVhuTel2nFHvbEk.png" alt="image-20210301195003696" style="zoom:50%;" />
 
 3. `patch`函数的对比流程
 

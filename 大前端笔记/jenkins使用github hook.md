@@ -2,7 +2,7 @@
 
 ### 配置 Github 项目 Settings -- Webhooks
 
-![image-20210902093713348](C:\Users\cnmz\AppData\Roaming\Typora\typora-user-images\image-20210902093713348.png)
+
 
 
 

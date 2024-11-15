@@ -114,8 +114,6 @@ docker run -d -p 27017:27017 --name mongo --restart=always -e  MONGO_INITDB_ROOT
 
 进入**mongo交互终端**，如图
 
-<img src="https://gitee.com/cnmz/images/raw/master/images/20210628095016.png" alt="image-20210515111054939"  />
-
 ```shell
 ## 连接admin数据库
 > use admin
@@ -193,8 +191,6 @@ docker exec -it mongo mongorestore -h localhost -u root -p admin123 --dir /tmp/b
 ## Moogoose 
 
 ### 关系性数据库 与 MongDB 以及 Mongoose 的区别
-
-![image-20210515130644028](https://gitee.com/cnmz/images/raw/master/imgs/20210515130644.png)
 
 ### Moogoose的使用
 

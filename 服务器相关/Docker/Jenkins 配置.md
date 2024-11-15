@@ -2,26 +2,39 @@
 
 > docker-compose.yml 配置文件
 
-```
-version: "3"
+```shell
 services:
   jenkins:
     container_name: "jenkins"
     image: jenkins/jenkins:lts
     restart: always
     user: root:992
+    environment:
+      TZ: 'Asia/Shanghai'
     ports:
       - "10080:8080"
       - "50000:50000"
       - "10051:10051"
     volumes:
-      - /home/jenkins/data:/var/jenkins_home
-      - /usr/bin/docker:/usr/bin/docker
-      - /var/run/docker.sock:/var/run/docker.sock
-
+      - ./data/jenkins_home:/var/jenkins_home
 ```
 
-命令启动
+使用  docker-compose 安装
+
+```shell
+$ docker-compose up
+```
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+```
+d99d017b8aff4c889c72e7060a2c9269
+```
+
+
+
+**命令启动**
 
 ```
 > docker run -d -u root -p 10080:8080 -p 50000:50000 -v /home/jenkins/data:/var/jenkins_home --name jenkins/jenkins:lts
@@ -67,5 +80,4 @@ echo 'build complete'
 ```
 docker rmi images_hash_id
 ```
-
 

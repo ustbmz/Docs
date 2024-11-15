@@ -22,6 +22,8 @@
     message: string, 
     data: string 
   }
+  // 返回示例
+  {"code":0,"message":"OpenDev","data":{"__retvalue":"0"}}
   ```
 
 - 说明
@@ -51,6 +53,8 @@
     message: string, 
     data: string 
   }
+  // 返回示例
+  {"code":0,"message":"OpenDev","data":{"__retvalue":"0"}}
   ```
 
 - **说明**: 重置身份证读卡器设备。成功时返回 `code: 0`，`data: 'success'`。
@@ -79,12 +83,12 @@
     message: string, 
     data: string 
   }
+  // 返回示例
+  {"code":0,"message":"GetDeviceStatus","data":{"__retvalue":"0","pStatus":"0"}}
   ```
 
-- 说明
+- 说明:  获取身份证读卡器设备的当前状态 ,成功时返回 `code: 0`，`data: 'success'`。
 
-  : 获取身份证读卡器设备的当前状态 ,成功时返回 `code: 0`，`data: 'success'`。
-  
   
 
 
@@ -107,13 +111,43 @@
     code: number, 
     message: string, 
     data: {
-      status:"Empty|NotEmpty|Error"
+      status:"HasCard",
+      description:'媒介存在设备内'
     } 
+  }
+  -----------------------------------
+  // 返回示例
+  {
+      "code": 0,
+      "message": {
+          "status": "MediaAtEntrance",
+          "description": "媒介处于入口"
+      },
+      "data": {
+          "__retvalue": "0",
+          "pStatus": "6"
+      }
   }
   ```
 
-- **说明**: 检查身份证读卡器中是否有卡。`status` 可能为 `'Empty'`（无卡）或 `'NotEmpty'`（有卡）。
+- **说明**: 检查身份证读卡器中是否有卡，`status` 主要为
 
+  - `Empty`（无卡）
+  - `HasCard`（有卡）
+  - `MediaAtEntrance`（媒介处于入口）
+  
+  > 所有返回值
+  
+  ```json
+  { status: 'HasCard', description: '媒介存在设备内' }
+  { status: 'Empty', description: '媒介不存在' }
+  { status: 'MediaJammed', description: '媒介被卡住，堵塞' }
+  { status: 'StatusNotSupported', description: '不支持查媒介状态' }
+  { status: 'StatusUnknown', description: '状态未知' }
+  { status: 'MediaAtEntrance', description: '媒介处于入口' }
+  { status: 'MediaLocked', description: '媒介存在并被锁定。这表示可对卡的芯片进行操作' }
+  { status: 'Error', description: '未知错误状态' }
+  ```
   
 
 ------
@@ -140,6 +174,8 @@
   	message: string, 
   	data: { status: string } 
   }
+  // 返回示例
+  {"code":0,"message":"EjectIdenCard","data":{"__retvalue":"0"}}
   ```
 
 - **说明**: 尝试退出身份证读卡器中的卡片。如果没有卡，返回 `code: -201`，`status: 'Has No Card'`。
@@ -160,11 +196,14 @@
   
 - 返回值
 
-  ```ts
-  { code: 0 ,
+  ```js
+  { 
+    code: 0 ,
   	message:"",
   	data:{
-  		IDCardInfo:info
+  		IDCardInfo:{
+       	...
+      }
   	}
   }
   ```
@@ -173,25 +212,21 @@
 
   >  IDCardInfo 返回数据
 
-  二代证pInfo返回的数据格式：
-  
-  IDType=0|Name=李明|Sex=男|Nation=汉|Born=19850101|Address=北京东城区建国门内大街 69 号|IDCardNO=622727199011111111| GrantDept=X 市公安局 X 分局|UserLifeBegin=20110101| UserLifeEnd=20310101|PhotoFileName=C:\photo.bmp
+  二代证IDCardInfo返回的数据格式：
   
   ```ts
   {
-    IDType   	// 身份证类型
-    Name     	// 姓名
-    Sex  		 	// 性别
-    Nation   	// 名族
-    Born 		 	// 出生日期
-    Address  	// 家庭住址
-    IDCardNO 	// 身份证号码
-    GrantDept	// 开立分局
-    UserLifeBegin // 身份证开立日
-    UserLifeEnd   // 身份证到期日
-    pFront  // 身份证正面base64 图片
-    pBack		// 身份证反面base64 图片
-    pFace		// 身份证人像base64 图片
+    name     	// 姓名
+    sex  		 	// 性别
+    nation   	// 名族
+    brithDay 		 	// 出生日期
+    homeAddress  	// 家庭住址
+    idNumber 	// 身份证号码
+    issuingAuthority	// 开立分局
+    validPeriod // 身份证开立日-身份证到期日
+    head  // 身份证人像绝对路径
+    front		// 身份证正面绝对路径
+    back		// 身份证反面绝对路径
   }
   ```
   
@@ -203,16 +238,17 @@
     message: 'success',
     data: {
       IDCardInfo: {
-        name: 'XXX',
-        gender: '男',
+        name: 'xxx',
+        sex: '男',
         nation: '汉',
-        birthDate: '20080101',
-        address: '广州深圳市宇信科技大楼100',
-        idNumber: '640102xxxxx129',
-        error: '',
-        head: 'YwA6AFwAdABtAHAAXABJAEQAZg==',
-        front: 'YwA6AFwAdABtAHAAXABJAEQAZg==',
-        back: ''
+        birthday: '19970901',
+        hoemAddress: 'xxx市xxx区xxx苑13-3-302号',
+        idNumber: '64010219970901031x',
+        issuingAuthority: 'xxx市公安局xxx分局',
+        validPeriod: '20150624-20350624',
+        head: 'c://tmp//IDhead.jpg',
+        front: 'c://tmp//IDfront.jpg',
+        back: 'c://tmp//IDback.jpg'
       }
     }
   }
@@ -228,8 +264,9 @@
 
 - 返回值
 
-  ```
-  { code: 0 ,
+  ```js
+  { 
+    code: 0 ,
   	message:"",
   	data:"success"
   }

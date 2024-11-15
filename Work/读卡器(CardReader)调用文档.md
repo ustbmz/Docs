@@ -4,7 +4,7 @@
 
 ## 初始化设备 (openDev)
 
-**调用方式**: `CardReader.openDev(LogicName)`
+**调用方式**: `CardReader.openDev()`
 
 > **注意**: 设备初始化后，必须调用 `resetDevice` 进行设备重置。
 
@@ -27,6 +27,8 @@
     message: string, 
     data: string 
   }
+  // 返回示例
+  {"code":0,"message":"OpenDev","data":{"__retvalue":"0"}}
   ```
   
 - **说明:** 初始化读卡器设备。成功时返回 `code: 0`，`data: 'success'`。
@@ -79,10 +81,21 @@
   { 
     code: number, 
     message: string, 
-    data: string 
+    data: {
+      __retvalue:返回码
+      pStatus："0|0"   第一个0 为读卡设备状态 / 第二个 0 为读卡器吞卡数量
+    } 
   }
   ```
+
+- 返回示例
+
+  ```js
+  {"code":0,"message":"GetDeviceStatus","data":{"__retvalue":"0","pStatus":"0|0"}}
+  ```
+
   
+
 - **说明**
 
   : 获取读卡器设备的当前状态 ,成功时返回 `code: 0`，`data: 'success'`。
@@ -90,29 +103,67 @@
 
 ------
 
-## 检查是否有卡 (getHaveCard)
 
-**调用方式**: `CardReader.getHaveCard({ timeout: 30000 })`
 
-- **参数** `可不传入参` 
+## 查询设备内和卡口是否有卡 (getHaveCard)
+
+**调用方式**: `IDCardReader.getHaveCard({ timeout: 30000 })`
+
+- 参数 `可不传入参` 
 
   ```ts
   - timeout (number): 超时时间（毫秒），默认为 30000
   ```
-  
-- **返回值**
+
+- 返回值
 
   ```js
-{ 
+  { 
     code: number, 
     message: string, 
     data: {
-      status:"Empty|NotEmpty|Error"
+      status:"HasCard",
+      description:'媒介存在设备内'
     } 
   }
   ```
 
-- **说明**: 检查读卡器中是否有卡。`status` 可能为 `'Empty'`（无卡）或 `'NotEmpty'`（有卡）。
+- **说明**: 检查身份证读卡器中是否有卡，`status` 主要为
+
+  - `Empty`（无卡）
+  - `HasCard`（有卡）
+  - `MediaAtEntrance`（媒介处于入口）
+
+  > 所有返回值
+
+  ```json
+  { status: 'HasCard', description: '媒介存在设备内' }
+  { status: 'Empty', description: '媒介不存在' }
+  { status: 'MediaJammed', description: '媒介被卡住，堵塞' }
+  { status: 'StatusNotSupported', description: '不支持查媒介状态' }
+  { status: 'StatusUnknown', description: '状态未知' }
+  { status: 'MediaAtEntrance', description: '媒介处于入口' }
+  { status: 'MediaLocked', description: '媒介存在并被锁定。这表示可对卡的芯片进行操作' }
+  { status: 'Error', description: '未知错误状态' }
+  ```
+
+  返回示例
+  
+  ```js
+  {
+      "code": 0,
+      "message": {
+          "status": "Empty",
+          "description": "媒介不存在"
+      },
+      "data": {
+          "__retvalue": "0",
+          "pStatus": "2"
+      }
+  }
+  ```
+  
+  
 
 ------
 
@@ -214,18 +265,32 @@
     cardSerialNumber // 银行卡序列号
     field55Data      // 55 域芯片信息
   }
+  
+  
   ```
 
 - 返回数据示例
 
   ```javascript
-  CardInfo: {
-    cardType: 'O',  // 如果是IC卡是I开头  磁条卡、回单卡是C开头  G开头表示是国密卡  O开头表示是他行卡
-    mainAccount: '6226880389969585',
-    track2Data: '6226880389969585D25062010000078300000F',
-    arqc: '41A7CACD8A3B8FC3',
-    cardSerialNumber: '01',
-    field55Data: '9F02060000000000005F2A0207029A032410149C0101950580000400009F3704464688005F3401015713622688038996'
+  {
+    "code": 0,
+    "message": "ReadCard",
+    "data": {
+      "__retvalue": "0",
+      "cardInfo": {
+        "cardType": "O",
+        "mainAccount": "6217232902001086009",
+        "balance1": 0,
+        "balance2": 0,
+        "track2Data": "6217232902001086009D25102207339991110F",
+        "arqc": "76FD4FA56E1E3116",
+        "cardSerialNumber": "00000000000000000000000001560000000000015699",
+        "aid": "A000000333010101",
+        "expirationDate": "00D0",
+        "icData": "251031"
+      },
+      "pLen": "620"
+    }
   }
   ```
   
@@ -248,6 +313,18 @@
   
 - **说明**: 取消插卡操作。成功时返回 `code: 0`，`data: 'success'`。
 
+- **取消插卡返回示例**
+
+  ```js
+  {"code":0,"message":"CancelInsert","data":{"__retvalue":"0"}}
+  ```
+
+* **读卡返回取消成功示例数据 (代表读卡事件取消成功)**
+
+  ```js
+  {"code":0,"message":"ReadCard","data":{"__retvalue":"-4","pInfo":"","pLen":"51536800"}}
+  ```
+
 ------
 
 ## 重置吞卡计数 (resetRetainCount)
@@ -264,6 +341,8 @@
   ```
   
 - **说明**: 重置吞卡计数器。成功时返回 `code: 0`，`data: 'success'`。
+
+- 当吞卡箱满时。将无法进行读卡与吞卡操作，需要清楚吞卡数量
 
 ------
 

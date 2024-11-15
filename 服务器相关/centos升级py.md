@@ -111,4 +111,3 @@ vi /usr/libexec/urlgrabber-ext-down
 ```
 
 这一步看具体情况，有些不需要有些需要，执行软连替换有些就直接可以生效，例如我的做完软连直接自动替换过来。
-![在这里插入图片描述](D:\Docs\Server\assets\20201124003803971.png#pic_center)

@@ -591,8 +591,6 @@ d.该数据直接采用了缓存，并没有发送请求
 
 ### END 登陆鉴权总结
 
-![image-20210523200820619](https://gitee.com/cnmz/images/raw/master/imgs/20210523200826.png)
-
 # Week05  Vue深入
 
 ## MVVM设计模式

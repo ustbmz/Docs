@@ -1,18 +1,14 @@
-## NodeJS 安装
+## NodeJS 安装与 PM2 后台启动
 
 ```shell
 $ cd /opt
 # 获取nodejs从阿里源,nodejs版本与开发版本保持一致
-$ wget https://registry.npmmirror.com/mirrors/node/v18.20.4/node-v18.20.4-linux-x64.tar.gz
+$ wget https://nodejs.org/download/release/v18.20.4/node-v18.20.4-linux-x64.tar.gz
 # 解压
 $ tar -zxvf node-v14.18.1-linux-x64.tar.gz
 # 重命名文件夹为nodejs
 $ mv node-v14.18.1-linux-x64/ nodejs
 ```
-
-**进入到/opt/nodejs/bin 你会看到**
-
-![img](https://gitee.com/cnmz/images/raw/master/mdpic/202111131511650.png)康康里面有啥
 
 ln指令用于创建关联
 

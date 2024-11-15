@@ -20,6 +20,9 @@
     message: string, 
     data: boolean 
   }
+  
+  // 数据示例
+  {"code":0,"message":"OpenDev","data":{"__retvalue":"0"}}
   ```
   
 - 说明: 初始化密码键盘设备。成功时返回 `code: 0`，`data: true`。
@@ -46,6 +49,9 @@
     message: string, 
     data: boolean 
   }
+  
+  // 数据示例
+  {"code":0,"message":"ResetDevice","data":{"__retvalue":"0"}}
   ```
   
 - **说明**: 重置密码键盘设备成功时返回 `code: 0`，`data: true`。
@@ -72,23 +78,44 @@
     message: string, 
     data: boolean 
   }
+  
+  // 数据示例
+  {"code":0,"message":"GetDeviceStatus","data":{"__retvalue":"0"}}
   ```
   
 - 说明: 获取密码键盘设备的当前状态。成功时返回 `code: 0`，`data: true`。
 
 ------
 
-## 输入密码 (inputPassword)
+## 输入密码 (XfsStartPin)
 
-**调用方式**: `PinPad.inputPassword({ minLength: 0, maxLength: 6, timeout: 30000 })`
+**调用方式**:  `明文示例` 
+
+```ts
+PinPad.XfsStartPin({ 
+    bEncy: 0, 
+		sFormat: 0, 
+		sPadding: 0,
+		pKeyName:'',
+		sLen:0,
+		pCardNO:'',
+		sAutoEnter:0 ,
+		lTimeOut:30000
+  })
+```
 
 - 参数
 
-  ```typescript
+  ```ts
   {
-    minLength: number, // 最小密码长度，默认为 6
-    maxLength: number, // 最大密码长度，默认为 12
-    timeout: number    // 超时时间（毫秒），默认为 30000
+    bEncy: number,			//是否加密 1=加密  0=不加密，明文输入。
+  	sFormat: number,		//sFormat指加密的模式，默认为0（WFS_PIN_FORM3624）
+  	sPadding: number, 	//只在密文输入时才有效，明文输入时值为NULL。
+    pKeyName:	string,		//指参与加密的工作密钥名称即在导入密钥时自定义的名称。明文输入时值无效
+    sLen:	number,				//输入密文的长度
+    pCardNO	:number,		//需要关联密码校验的卡号。明文输入时值无效
+    sAutoEnter:	number,	//是否自动提交(0不自动提交  1自动提交)
+    lTimeOut:	number,		//超时时间
   }
   ```
   
@@ -105,6 +132,8 @@
   ```
   
 - **说明**: 启动密码输入过程。返回加密后的密码。
+
+- 注意：输入结束后，必须调用取消输入事件
 
 ------
 
@@ -123,6 +152,22 @@
   ```
   
 - **说明**: 取消当前的密码输入过程。成功时返回 `code: 0, message:"", data: 'success'`。
+
+- 取消输入后密码键盘输入事件返回示例
+
+  ```js
+  {
+      "code": 0,
+      "message": "XfsStartPin",
+      "data": {
+          "__retvalue": "-4",
+          "Value": "",
+          "pValueLen": "52128408"
+      }
+  }
+  ```
+
+  
 
 ------
 

@@ -14,6 +14,8 @@
 
 ------
 
+
+
 ## 关闭设备 (closeDev) 
 
 > 暂无调用场景
@@ -32,9 +34,11 @@
 
 ------
 
+
+
 ## 重置设备 (resetDevice)
 
-**调用方式**: `SIU.resetDevice({ timeout: 30000 })`
+**调用方式**: `SIU.resetDevice()`
 
 - **参数**: `可不传入参`
 
@@ -53,47 +57,57 @@
 - **说明**: 重置凭条打印设备。返回 WOSA 代码，0 表示成功
 
 ------
+
+
 ## 设置灯光状态 (SetGuidLight)
 
-**调用方式**: `SIU.getMediaStatus({ timeout: 30000 })`
+**调用方式**: `SIU.setGuidLight({ logicName: 'CardReader',action:'ON' })`
 
 - **参数**: 超时事件可默认不传
 
-  ```typescript
+  ```javascript
   {
-    type:number,    // lTYpe
-    status:number,  // lStatus:             
-    timeout: number // 超时时间（毫秒），默认为 30000
+    logicName:string,
+    action:string
   }
   ```
   
-  - type 码值映射硬件 (待验证)
+  - logicName ：传入对应硬件的逻辑名
   
        ```shell
-       0---身份证|WFS_SIU_SCANNER
-       1---电动磁卡读卡器|WFS_SIU_CARDUNIT
-       2---凭条|WFS_SIU_RECEIPTPRINTER
-       3---Ukey|WFS_SIU_ENVDISPENSER
-       4---密码键盘|WFS_SIU_PINPAD
-       5---存折打印机|WFS_SIU_PASSBOOKPRINTER
-       6---指纹指示灯|14
-       7---激光打印机指示灯|WFS_SIU_NOTESDISPENSER
-       8---非接|13
-       9---票据扫描|WFS_SIU_BILLACCEPTOR
-       10--票据发售|WFS_SIU_COINDISPENSER
+       IDCardReader -- 身份证
+       CardReader   -- 读卡器
+       PinPad       -- 密码键盘
+       Receipt      -- 凭条
+       Finger       -- 指纹仪
        ```
   
-  - status 码值对应灯光状态
+       >  源码
   
-      ```shell
-      0---关灯
-      1---慢闪
-      2---中闪
-      3---快闪
-      4---常亮
-      ```
-      
-      
+       ```ts
+       case 'CardReader':
+         return SetGuidLight(0, status, timeout)
+       case 'IDCardReader':
+         return SetGuidLight(15, status, timeout)
+       case 'PinPad':
+         return SetGuidLight(1, status, timeout)
+       case 'Finger':
+         return SetGuidLight(14, status, timeout)
+       case 'Receipt':
+         return SetGuidLight(4, status, timeout)
+       default:
+         // 如果匹配不到逻辑名，关闭所有灯光
+         return SetGuidLight(0, 0, timeout)
+         
+       ```
+       
+       
+       
+  - action 码值对应灯光状态
+	
+	     ```shell
+    'ON':开灯
+    'OFF':关灯   
   
 - **返回值**
 
@@ -105,7 +119,9 @@
   }
   ```
   
-- **说明**: 查询纸张状态。返回对象包含状态码、消息和状态数据。
+- **说明**：查询纸张状态。返回对象包含状态码、消息和状态数据。
+
+- **待办**：**``后续添加闪烁状态**``
 
 
 
