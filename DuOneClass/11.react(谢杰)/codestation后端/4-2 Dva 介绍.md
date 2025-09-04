@@ -26,11 +26,11 @@
 
 数据流图1:
 
-<img src="https://s2.loli.net/2024/10/08/2YGocVprW4LJDmN.png" alt="image-20221105162108061" style="zoom:50%;" />
+![image-20221105162108061](https://s2.loli.net/2024/10/08/2YGocVprW4LJDmN.png)
 
 数据流图2:
 
-<img src="https://s2.loli.net/2024/10/08/vDQ7YWb8lEKVdAn.png" alt="image-20221105162152274" style="zoom:50%;" />
+![image-20221105162152274](https://s2.loli.net/2024/10/08/vDQ7YWb8lEKVdAn.png)
 
 *Dva* 中的核心概念如下：
 

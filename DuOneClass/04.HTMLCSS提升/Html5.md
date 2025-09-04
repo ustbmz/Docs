@@ -1,4 +1,4 @@
-<img src="/Users/mew/docs/duone/04.HTMLCSS提升/assets/20210518112557.png" alt="image-20210518112556986" style="zoom:50%;" />
+<img src="https://s2.loli.net/2025/02/01/UCW37siApKcfMEQ.png" alt="image-20210518112556986" style="zoom:50%;" />
 
 > HTML5包含两个部分的更新，分别是`文档`和`web api`
 
@@ -8,7 +8,7 @@
 
 [HTML5元素表](https://www.xuanfengge.com/funny/html5/element/)
 
-![image-20230325115945844](./assets/image-20230325115945844.png)
+![image-20230325115945844](https://s2.loli.net/2025/02/01/THGDAy5Xjik1bJ3.png)
 
 
 
@@ -107,7 +107,7 @@
 
 ### 自定义数据属性
 
-<img src="/Users/mew/docs/duone/04.HTMLCSS提升/assets/20210518123117.png" alt="image-20210518123117393" style="zoom:50%;" />
+<img src="https://s2.loli.net/2025/02/01/W8QnE3uFgICaKj9.png" alt="image-20210518123117393" style="zoom:50%;" />
 
 ### input的新增属性
 
@@ -191,7 +191,7 @@ JSON.parse(jsonString); // 将JSON格式的字符串转换为对象或数组
 
 浮动的帧率就导致一个问题，我们在使用`setInterval`等计时器实现某些动画效果时，如何才能保证每一帧只执行一次动画效果呢？
 
-![image-20210518133821647](/Users/mew/docs/duone/04.HTMLCSS提升/assets/20210518133821.png)
+![image-20210518133821647](https://s2.loli.net/2025/02/01/y4xc1PCTKkAbIew.png)
 
 为了解决该问题，HTML5新增API`requestAnimationFrame`，用于在每一帧渲染**之前**做某些事
 

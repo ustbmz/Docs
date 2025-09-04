@@ -75,14 +75,14 @@ LISTEN    0         128              127.0.0.1:27017            0.0.0.0:*       
 ```sql
 $ mongosh
 > use admin
-> db.createUser({user:"admin",pwd:"IamMZ0129***",roles:[{role:"dbOwner",db:"admin"}]})
+> db.createUser({user:"admin",pwd:"IamMZ01@(",roles:[{role:"dbOwner",db:"admin"}]})
 ```
 
 ## 创建操作用户
 
 ```sql
 > use testdb
-> db.createUser({user:"code",pwd:"IamMZ0129***",roles:[{role:"dbOwner",db:"codestation"}]})
+> db.createUser({user:"code",pwd:"IamMZ01@(",roles:[{role:"dbOwner",db:"codestation"}]})
 ```
 
 ## 数据库启动失败
