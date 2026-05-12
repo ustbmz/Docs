@@ -6,8 +6,8 @@ import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 const route = useRoute()
 const { isOpen } = useSidebar()
 
-/** 等折叠动画基本结束再滚，避免和高度变化打架 */
-const SCROLL_AFTER_COLLAPSE_MS = 340
+/** 路由变化后稍晚再滚侧栏，等 DOM 稳定 */
+const SCROLL_SIDEBAR_DELAY_MS = 80
 /** 侧栏内缓动滚动时长 */
 const SCROLL_DURATION_MS = 480
 /**
@@ -66,32 +66,14 @@ function runSidebarFocus(opts?: { forceSidebarScroll?: boolean }) {
 
   nextTick(() => {
     requestAnimationFrame(() => {
-      collapseInactiveTopSections()
       scrollDelayTimer = setTimeout(() => {
         scrollDelayTimer = undefined
         lastPathForSidebarCategory = path
         if (!sameTopCategory || opts?.forceSidebarScroll) {
           scrollActiveGroupToTop()
         }
-      }, SCROLL_AFTER_COLLAPSE_MS)
+      }, SCROLL_SIDEBAR_DELAY_MS)
     })
-  })
-}
-
-/** 收起当前文档所属顶级分组以外的所有顶级分组（与顶部导航切换栏目时的预期一致） */
-function collapseInactiveTopSections() {
-  const aside = document.querySelector('.VPSidebar')
-  const nav = aside?.querySelector('#VPSidebarNav')
-  if (!nav) return
-
-  const groups = nav.querySelectorAll(':scope > .group')
-  groups.forEach((group) => {
-    const root = group.querySelector(':scope > .VPSidebarItem.level-0')
-    if (!root || root.classList.contains('has-active')) return
-    if (!root.classList.contains('collapsed')) {
-      const caret = root.querySelector<HTMLElement>(':scope > .item > .caret')
-      caret?.click()
-    }
   })
 }
 
@@ -181,5 +163,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <!-- 无 UI：仅同步侧栏折叠与滚动 -->
+  <!-- 无 UI：仅同步侧栏滚动 -->
 </template>
