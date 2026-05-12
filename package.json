@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "build:pages": "VITEPRESS_BASE=/Docs/ vitepress build",
+    "preview": "vitepress preview",
+    "preview:pages": "VITEPRESS_BASE=/Docs/ vitepress preview"
   },
   "devDependencies": {
     "mermaid": "^11.4.1",

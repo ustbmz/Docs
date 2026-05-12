@@ -4,6 +4,13 @@ import fs from 'node:fs'
 import { buildSidebar, DOCS_ROOT, entryLinkForTopFolder } from './sidebar'
 import { imgHtmlToMarkdown } from './markdown-img-html'
 
+/** GitHub Pages 项目站子路径，与仓库名一致；本地不设则为 `/` */
+function vitepressBase(): string {
+  const raw = process.env.VITEPRESS_BASE?.trim()
+  if (!raw || raw === '/') return '/'
+  return raw.endsWith('/') ? raw : `${raw}/`
+}
+
 function topNav() {
   const skip = new Set([
     'node_modules',
@@ -22,6 +29,7 @@ function topNav() {
 
 export default withMermaid(
   defineConfig({
+    base: vitepressBase(),
     title: '学习资料库',
     description: '个人笔记与教程在线浏览',
     lang: 'zh-CN',
