@@ -3,6 +3,28 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /*
+   * 侧栏分组展开/折叠：覆盖默认的 display:none，用 max-height + opacity 做过渡。
+   * 首屏 .group.no-transition 期间不加 transition，避免与主题首帧逻辑冲突。
+   */
+  .VPSidebar .VPSidebarItem > .items {
+    overflow: hidden;
+    max-height: 2600px;
+  }
+
+  .VPSidebar .group:not(.no-transition) .VPSidebarItem > .items {
+    transition:
+      max-height 0.32s cubic-bezier(0.33, 1, 0.68, 1),
+      opacity 0.22s ease;
+  }
+
+  .VPSidebar .VPSidebarItem.collapsed > .items {
+    display: block !important;
+    max-height: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .vp-doc h1,

@@ -9,14 +9,23 @@ const { isOpen } = useSidebar()
 /** 等折叠动画基本结束再滚，避免和高度变化打架 */
 const SCROLL_AFTER_COLLAPSE_MS = 340
 /** 侧栏内缓动滚动时长 */
-const SCROLL_DURATION_MS = 520
-/** 目标分组与侧栏顶部的留白（略大一点，视觉上不那么“顶死”） */
-const SCROLL_TOP_PADDING = 20
+const SCROLL_DURATION_MS = 480
+/**
+ * 当前栏目分组对齐到侧栏可视区域时，分组顶边距侧栏顶部的目标比例（约 1/4 留白）
+ */
+const SIDEBAR_GROUP_TOP_RATIO = 0.25
+/**
+ * 分组顶边与目标位置的差距小于该比例时不再滚动，避免「点第一条也大幅滑动」
+ */
+const SIDEBAR_SCROLL_IDLE_BAND_RATIO = 0.07
 
 let scrollAnimFrame = 0
 let scrollDelayTimer: ReturnType<typeof setTimeout> | undefined
 /** 上一次用于判断「是否同一顶级栏目」的路径 */
 let lastPathForSidebarCategory = ''
+/** 左侧栏内带链接的点击时间戳；短时间内触发的路由/ hash 更新一律视为侧栏导航 */
+let lastSidebarLinkClickAt = 0
+const SIDEBAR_LINK_CLICK_GRACE_MS = 180
 
 function topLevelSegment(path: string): string {
   const seg = path.split('/').filter(Boolean)[0] ?? ''
@@ -37,6 +46,17 @@ function runSidebarFocus(opts?: { forceSidebarScroll?: boolean }) {
   cancelAnimationFrame(scrollAnimFrame)
 
   const path = route.path
+
+  const withinSidebarLinkGrace =
+    Date.now() - lastSidebarLinkClickAt < SIDEBAR_LINK_CLICK_GRACE_MS
+  if (withinSidebarLinkGrace && !opts?.forceSidebarScroll) {
+    lastPathForSidebarCategory = path
+    return
+  }
+  if (opts?.forceSidebarScroll) {
+    lastSidebarLinkClickAt = 0
+  }
+
   const prevTop = lastPathForSidebarCategory
     ? topLevelSegment(lastPathForSidebarCategory)
     : ''
@@ -105,7 +125,7 @@ function animateAsideScroll(aside: HTMLElement, targetTop: number) {
   scrollAnimFrame = requestAnimationFrame(step)
 }
 
-/** 把包含当前页的顶级分组滚到左侧栏可视区域靠上位置 */
+/** 将当前栏目分组滚到侧栏内合适位置：顶部约留 1/4 视口，已接近则不再滚 */
 function scrollActiveGroupToTop() {
   const aside = document.querySelector<HTMLElement>('.VPSidebar')
   if (!aside) return
@@ -120,9 +140,14 @@ function scrollActiveGroupToTop() {
 
   const asideRect = aside.getBoundingClientRect()
   const groupRect = group.getBoundingClientRect()
-  const nextTop =
-    aside.scrollTop + (groupRect.top - asideRect.top) - SCROLL_TOP_PADDING
+  const vh = aside.clientHeight
+  const reserveTop = vh * SIDEBAR_GROUP_TOP_RATIO
+  const currentOffset = groupRect.top - asideRect.top
+  const delta = currentOffset - reserveTop
+  const idle = Math.max(20, vh * SIDEBAR_SCROLL_IDLE_BAND_RATIO)
+  if (Math.abs(delta) < idle) return
 
+  const nextTop = aside.scrollTop + delta
   animateAsideScroll(aside, nextTop)
 }
 
@@ -133,11 +158,23 @@ watch(isOpen, (open) => {
   if (open) runSidebarFocus({ forceSidebarScroll: true })
 })
 
+function onDocumentClickCapture(e: MouseEvent) {
+  if (e.button !== 0) return
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+  const el = e.target as HTMLElement | null
+  const a = el?.closest('a')
+  if (!a?.getAttribute('href')) return
+  if (!a.closest('.VPSidebar')) return
+  lastSidebarLinkClickAt = Date.now()
+}
+
 onMounted(() => {
+  document.addEventListener('click', onDocumentClickCapture, true)
   setTimeout(runSidebarFocus, 100)
 })
 
 onBeforeUnmount(() => {
+  document.removeEventListener('click', onDocumentClickCapture, true)
   if (scrollDelayTimer != null) clearTimeout(scrollDelayTimer)
   cancelAnimationFrame(scrollAnimFrame)
 })
