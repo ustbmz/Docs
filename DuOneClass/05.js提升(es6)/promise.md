@@ -8,8 +8,6 @@
 
 ![image-20210621103501094](https://s2.loli.net/2024/08/05/jvSKpmNiUBaLIw2.png)
 
-![image-20210621103501094](./assets/20210621103501.png)
-
 1. then方法必定会返回一个新的Promise
 
    可理解为`后续处理也是一个任务`

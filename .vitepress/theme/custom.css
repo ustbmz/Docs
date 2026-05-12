@@ -1,0 +1,22 @@
+/* 锚点跳转平滑滚动；标题预留顶栏高度，避免被固定导航挡住 */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6 {
+  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 12px);
+}
+
+/* 侧栏：二层目录略缩进（无竖线） */
+.VPSidebar .VPSidebarItem.level-0 > .items {
+  margin-top: 4px;
+  margin-left: 6px;
+  padding-left: 10px;
+}

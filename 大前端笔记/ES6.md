@@ -733,9 +733,9 @@ console.log( /^\u{61}/u.test('a'))
 
 - 阅读
 
-  - unicode 及编码方式概述 <a>https://www.ibm.com/developerworks/cn/java/unicode-programming-language/index.html
+  - unicode 及编码方式概述 [IBM 文档](https://www.ibm.com/developerworks/cn/java/unicode-programming-language/index.html)
 
-  - Unicode 与 JavaScript 详解 <a>https://coding.imooc.com/lesson/389.html#mid=29198
+  - Unicode 与 JavaScript 详解 [慕课网](https://coding.imooc.com/lesson/389.html#mid=29198)
 
 ## Template
 
@@ -1383,7 +1383,7 @@ console.log(n.next().value);
 - 推荐阅读
 
   - 斐波那契数列
-  - Generators <a>https://exploringjs.com/es6/ch_generators.html
+  - Generators [exploringjs.com](https://exploringjs.com/es6/ch_generators.html)
 
 - Thinking
   - 使用 Generators 实现一个斐波那契数列

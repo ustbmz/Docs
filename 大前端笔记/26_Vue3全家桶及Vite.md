@@ -91,7 +91,7 @@ Vue3 在默认路径为空的情况下，不会加上 '/'
 
 
 
-* npm init vite-app <project-name>
+* npm init vite-app `<project-name>`
 * vite 支持热更新，冷启动
 * vite 提供打包构建语言，按需进行打包
 
